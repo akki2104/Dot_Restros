@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Roboto+Slab:wght@300&display=swap');
+
+
+body{
+  background-color: #DEDEDE;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header_main{
+  font-family: 'Jost', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.dosrestros_logo_phone{
+  display:none;
+}
+
+.logsin_small{
+  display:none !important;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+  .dosrestros_logo_big{
+    display:none;
+  }
+  .dosrestros_logo_phone{
+    display:flex;
+    margin-right: 30%;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media only screen and (max-width: 400px) {
+  .dosrestros_logo_big{
+    display:none;
   }
-  to {
-    transform: rotate(360deg);
+  .dosrestros_logo_phone{
+    display:flex;
+    margin-right: 15%;
+  }
+  .logsin_big{
+    display:none !important;
+  }
+  .logsin_small{
+    display:flex !important;
+    padding:2px 5px 2px 5px;
   }
 }
