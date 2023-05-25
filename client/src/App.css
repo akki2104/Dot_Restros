@@ -1,0 +1,53 @@
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Roboto+Slab:wght@300&display=swap');
+
+
+body{
+  background-color: #DEDEDE;
+}
+
+.header_main{
+  font-family: 'Jost', sans-serif;
+}
+
+.dosrestros_logo_phone{
+  display:none;
+}
+
+.logsin_small{
+  display:none !important;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+  .dosrestros_logo_big{
+    display:none;
+  }
+  .dosrestros_logo_phone{
+    display:flex;
+    margin-right: 30%;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .dosrestros_logo_big{
+    display:none;
+  }
+  .dosrestros_logo_phone{
+    display:flex;
+    margin-right: 15%;
+  }
+  .logsin_big{
+    display:none !important;
+  }
+  .logsin_small{
+    display:flex !important;
+    padding:2px 5px 2px 5px;
+  }
+}
