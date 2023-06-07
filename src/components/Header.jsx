@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from "react-router-dom";
 import "../App.css"
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -18,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 // import Divider from '@mui/material/Divider';
 // import AdbIcon from '@mui/icons-material/Adb';
 const pages = ['Home', 'Plan Meal', 'Contact Us'];
+
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const logo = "./images/LOGO.png";
 // 
@@ -103,7 +105,7 @@ const Header = () => {
           justifyContent:'center'
         }} >
           <img className='dosrestros_logo_big' src={logo} alt="dotrestrosLogo" style={{
-            width: '5%', height: '5%', marginLeft: '7%', marginRight:'4%',
+            width: '5%', height: '5%', marginLeft: '5.5%', marginRight:'4%',
             //we have to change display to none for mobile version using media queries
           }} />
 
@@ -227,11 +229,11 @@ const Header = () => {
 
             fontFamily: 'Jost',
             fontWeight: '700',
-            mr: '7%',
+            mr: '5.5%',
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} >Login/Signup</MenuItem>
+          }} ><Link to="/register" >Login/Signup</Link></MenuItem>
 
 
           <MenuItem className='logsin_small' sx={{
@@ -244,7 +246,7 @@ const Header = () => {
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} >Login</MenuItem>
+          }} ><Link to="/register" >Login</Link></MenuItem>
 
 
 
