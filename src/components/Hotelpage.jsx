@@ -2,10 +2,10 @@ import React from 'react'
 import Header from './Header'
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
-
+// import Box from '@mui/material/Box';
+// import { useState } from 'react';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -13,8 +13,21 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import "../App.css"
+
 import DatePick from './Datepick';
+import Timepick from './Timepick';
+// import userEvent from '@testing-library/user-event';
+
+
+
+//accordion for menu items of hotel
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import "../App.css"
+import Hotellist from "./Hotellist"
 
 
 
@@ -29,20 +42,61 @@ import DatePick from './Datepick';
 
 
 
+const Hotelpage = () => {   //de-structuring props and using match to find the particular hotelpage
+  // const [user, setUser] = useState({
+  //   name: ""
+  // })
+  const [expanded, setExpanded] = React.useState(false);
 
-const Hotelpage = () => {
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  const { id } = useParams()
+
+  const hotel = Hotellist.find((h) => {
+    return (
+      String(h.id) === id
+    )
+  })
+
+  console.log(hotel)
+
+  // let name, value;
+  const takeValue = (v) => {
+
+    // console.log(name)
+
+    console.log(v.target.value)
+
+  }
+  const getDate = (v) => {
+    // setDate(currDate)
+    console.log(v.$D)
+    console.log(v.$M + 1)
+    console.log(v.$y)
+  }
+  const getTime = (v) => {
+    console.log(v.$H)
+    console.log(v.$m)
+  }
+
+
+
+
+
   return (
     <>
       <Header />
-      <Grid sx={{ marginTop: "5%", display: "flex", justifyContent: "center", marginLeft: '-1.6%' }} container spacing={0}>
-        <Grid xs={6}>
+      <Grid sx={{ display: { xs: "flex" }, marginTop: "5%", justifyContent: "center", marginLeft: '-1.6%' }} container spacing={0}>
+        <Grid item md={6} xs={12}>
 
           <Card sx={{ width: 'auto', height: 'auto', borderRadius: '20px', boxShadow: 0 }}>
 
             <CardMedia
               component="img"
               height="370px"
-              image="./images/harikrushna.jpeg"
+              image={hotel.image}
               alt="Paella dish"
             />
             <CardHeader
@@ -52,7 +106,7 @@ const Hotelpage = () => {
                 <Grid container >
                   <Grid sx={{}} xs={8} >
                     <Typography variant="h5" fontWeight="700" >
-                      Harikrushna Restaurent
+                      {hotel.name}
                     </Typography>
                   </Grid>
                   <Grid sx={{ paddingLeft: "23%" }} xs={4} >
@@ -68,7 +122,7 @@ const Hotelpage = () => {
               subheader={
                 <Grid sx={{ marginTop: "-2.5%" }} >
                   <Typography variant="h7" fontWeight="700" color="text.secondary"  >
-                    1st Floor, Jyoti park society, Kamrej
+                    {hotel.location}
                   </Typography>
                 </Grid>
               }
@@ -135,14 +189,14 @@ const Hotelpage = () => {
           </Card>
 
         </Grid>
-        <Grid xs={4}>
+        <Grid item md={4} xs={12}>
           <Card sx={{ paddingLeft: "5%", marginLeft: "10%", width: '505px', height: '525px', borderRadius: '20px', boxShadow: 0 }}>
             <CardHeader
               sx={{ marginTop: "5%", paddingBottom: 0 }}
 
               title={
                 <Grid container sx={{ alignItems: "center" }} >
-                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='./images/cuisine.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
+                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='/images/cuisine.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
 
                   <Grid>
                     <Typography variant="h6" fontWeight="700" >
@@ -165,7 +219,7 @@ const Hotelpage = () => {
 
               title={
                 <Grid container sx={{ alignItems: "center" }} >
-                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='./images/type.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
+                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='/images/type.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
 
                   <Grid>
                     <Typography variant="h6" fontWeight="700" >
@@ -188,7 +242,7 @@ const Hotelpage = () => {
 
               title={
                 <Grid container sx={{ alignItems: "center" }} >
-                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='./images/facilities.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
+                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='/images/facilities.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
 
                   <Grid>
                     <Typography variant="h6" fontWeight="700" >
@@ -205,7 +259,7 @@ const Hotelpage = () => {
                 // </Typography>
                 <Grid container sx={{ alignItems: "center" }}>
                   <Grid container xs={6} sx={{ marginTop: "3%" }} >
-                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='./images/wifi.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
+                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='/images/wifi.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
 
                     <Grid>
                       <Typography variant="h7" fontWeight="700" >
@@ -214,7 +268,7 @@ const Hotelpage = () => {
                     </Grid>
                   </Grid>
                   <Grid container xs={6} sx={{ marginTop: "3%" }}>
-                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "0%", marginLeft: "30px" }} ><img src='./images/ac.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
+                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "0%", marginLeft: "30px" }} ><img src='/images/ac.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
 
                     <Grid>
                       <Typography variant="h7" fontWeight="700" >
@@ -223,7 +277,7 @@ const Hotelpage = () => {
                     </Grid>
                   </Grid>
                   <Grid container xs={6} sx={{ marginTop: "3%" }}>
-                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='./images/car.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
+                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='/images/car.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
 
                     <Grid>
                       <Typography variant="h7" fontWeight="700" >
@@ -232,7 +286,7 @@ const Hotelpage = () => {
                     </Grid>
                   </Grid>
                   <Grid container xs={6} sx={{ marginTop: "3%" }}>
-                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='./images/serving.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
+                    <Grid sx={{ display: "flex", alignItems: "center", marginRight: "3%", marginLeft: "30px" }} ><img src='/images/serving.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
 
                     <Grid>
                       <Typography variant="h7" fontWeight="700" >
@@ -250,7 +304,7 @@ const Hotelpage = () => {
 
               title={
                 <Grid container sx={{ alignItems: "center" }} >
-                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='./images/type.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
+                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='/images/type.png' style={{ width: "30px", height: "30px " }} alt='cuisine logo' /></Grid>
 
                   <Grid>
                     <Typography variant="h6" fontWeight="700" >
@@ -273,60 +327,193 @@ const Hotelpage = () => {
       </Grid>
 
 
-      <Grid sx={{ marginTop: "2%",justifyContent:"center",marginLeft:"-0.1%" }} container  >
-        <Grid sx={{ backgroundColor:"#fff",borderRadius:"20px" }} xs={4} >
-          <Typography sx={{ marginTop:"2%",marginLeft:"3.3%" }} variant="h6" fontWeight="700" >
-            Booking Details
-          </Typography>
-
-          <Grid sx={{ marginLeft:"3.3%",display: "grid" }} >
-            <Box
+      <Grid sx={{ marginTop: "2%", justifyContent: "center", marginLeft: "-0.1%" }} container  >
+        <Grid sx={{ backgroundColor: "#fff", borderRadius: "20px" }} >
 
 
-              sx={{
-                '& > :not(style)': { m: 1, width: '40ch' }
+          <Grid  >
 
-              }}
-              Validate
-              autoComplete="off"
-            >
-              <TextField  type='text' id="outlined-basic" label="Full Name" variant="outlined" />
-              
-              
-            </Box>
-            <Box
+            <Grid
+              container
 
+              display="flex"
+              method='POST'
+              action='/details'
+              component="form"
 
               sx={{
-                '& > :not(style)': { m: 1, width: '25ch' }
+                '& > :not(style)': { m: 3.4, width: '40ch' }
 
               }}
-              Validate
+
               autoComplete="off"
             >
-              
-              <TextField type='tel' id="outlined-basic" label="Mobile Number" variant="outlined" />
-              
-            </Box>
+              <Grid item xs={5} >
+                <Grid><Typography item sx={{}} variant="h6" fontWeight="700" >
+                  Booking Details
+                </Typography></Grid>
+                <Grid><TextField onChange={takeValue} name='fullname' type='text' id="outlined-basic" label="Full Name" variant="outlined" /></Grid>
+                <Grid><TextField name="number" type='tel' id="outlined-basic" label="Mobile Number" variant="outlined" /></Grid>
+              </Grid>
+              <Grid item sx={{ backgroundColor: "#fff", borderRadius: "20px" }} xs={2} >
+                <Typography variant="h6" fontWeight="700" >
+                  Date
+                </Typography>
+                <DatePick forValue={getDate} />
+              </Grid>
+              <Grid sx={{}} item xs={2} >
+                <Typography variant="h6" fontWeight="700" >
+                  Time Slot
+                </Typography>
+                <Timepick forValue={getTime} />
+              </Grid>
+
+            </Grid>
 
 
           </Grid>
 
 
         </Grid>
-        <Grid sx={{ marginLeft:"3%",backgroundColor:"#fff",borderRadius:"20px" }} xs={2} >
-          <Typography variant="h6" fontWeight="700" >
-            Date
-          </Typography>
-          <DatePick />
-        </Grid>
-        <Grid xs={4} >
-          <Typography variant="h6" fontWeight="700" >
-            Time Slot
-          </Typography>
-        </Grid>
+
 
       </Grid>
+
+      <Grid sx={{ display: { xs: "flex" }, marginTop: "2%", justifyContent: "center", marginLeft: '-1.8%' }} container spacing={2}>
+        <Grid item xs={12} md={6} >
+          <div>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
+                  Dish 1
+                </Typography>
+
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+                  Aliquam eget maximus est, id dignissim quam.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2bh-content"
+                id="panel2bh-header"
+              >
+                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}> Dish 2</Typography>
+
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
+                  varius pulvinar diam eros in elit. Pellentesque convallis laoreet
+                  laoreet.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3bh-content"
+                id="panel3bh-header"
+              >
+                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
+                Dish 3
+                </Typography>
+
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
+                  amet egestas eros, vitae egestas augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel4bh-content"
+                id="panel4bh-header"
+              >
+                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>Dish 4</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
+                  amet egestas eros, vitae egestas augue. Duis vel est augue.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={4} >
+          <Card sx={{ padding: "0% ", marginLeft: "6%", width: '505px', height: '525px', borderRadius: '20px', boxShadow: 0 }}>
+            <CardHeader
+
+              sx={{ backgroundColor: "#2A88DF", borderRadius: "20px", color: "white" }}
+
+              title={
+                <Typography variant="h5" fontWeight="700" >
+                  Order Summary
+                </Typography>
+              }
+              subheader={
+                <Grid sx={{ textAlign:"center" ,color: "white" }} container >
+                  <Grid xs={4}>
+                    <Typography variant="h7" fontWeight="700" >
+                      Item
+                    </Typography>
+                  </Grid>
+                  <Grid xs={4}>
+                    <Typography variant="h7" fontWeight="700" >
+                      Quantity
+                    </Typography>
+                  </Grid>
+                  <Grid xs={4}>
+                    <Typography variant="h7" fontWeight="700" >
+                      Net Total
+                    </Typography>
+                  </Grid>
+
+                </Grid>
+              }
+            />
+
+            <CardContent>
+              <Grid sx={{ textAlign:"center" ,color: "#282828" }} container >
+                <Grid  xs={4}>
+                  <Typography variant="h7" fontWeight="700" >
+                    Kaju Butter Masala
+                  </Typography>
+                </Grid>
+                <Grid xs={4}>
+                  <Typography variant="h7" fontWeight="700" >
+                    1
+                  </Typography>
+                </Grid>
+                <Grid xs={4}>
+                  <Typography variant="h7" fontWeight="700" >
+                    190
+                  </Typography>
+                </Grid>
+
+              </Grid>
+            </CardContent>
+
+
+          </Card>
+        </Grid>
+      </Grid>
+
+
+
+
 
     </>
   )

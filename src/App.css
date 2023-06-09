@@ -58,7 +58,7 @@ input::placeholder{
 }
 
 /* hotelpagecss */
-h6{
+*{
   font-family: 'Jost', sans-serif !important;
 }
 input.outlined-basic{

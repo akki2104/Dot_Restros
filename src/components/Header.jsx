@@ -21,7 +21,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = ['Home', 'Plan Meal', 'Contact Us'];
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const logo = "./images/LOGO.png";
+const logo = "/images/LOGO.png";
 // 
 
 
