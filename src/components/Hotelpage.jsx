@@ -88,10 +88,10 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
   return (
     <>
       <Header />
-      <Grid sx={{ display: { xs: "flex" }, marginTop: "5%", justifyContent: "center", marginLeft: '-1.6%' }} container spacing={0}>
-        <Grid item md={6} xs={12}>
+      <Grid sx={{ display: { xs: "flex" }, marginTop: "5%", justifyContent: "center", marginLeft: { xs: "3%", md: "-1.6%" } }} container spacing={0}>
+        <Grid sx={{}} item md={6} xs={12}>
 
-          <Card sx={{ width: 'auto', height: 'auto', borderRadius: '20px', boxShadow: 0 }}>
+          <Card sx={{ width: 'auto', minWidth: "500px", height: 'auto', borderRadius: '20px', boxShadow: 0 }}>
 
             <CardMedia
               component="img"
@@ -147,13 +147,13 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     Get Directions on the map
                   </Typography>
                 </Grid>
-                <Grid container sx={{ paddingLeft: "7%", marginTop: "0%" }} xs={6} >
-                  <Grid sx={{ marginLeft: "40%" }} xs={3} >
+                <Grid container sx={{ paddingLeft: { xs: "0", md: "7%" }, marginTop: "0%" }} xs={6} >
+                  <Grid sx={{ marginLeft: { xs: "40%" } }} xs={3} >
                     <MenuItem sx={{
                       color: '#fff',
                       backgroundColor: "#2A88DF",
                       borderRadius: "10px",
-                      width: "auto",
+                      width: "70px",
                       display: "flex",
                       fontFamily: 'Jost',
                       fontWeight: '700',
@@ -164,12 +164,12 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     }} ><Link to="/hotelname/menu" >Menu</Link></MenuItem>
 
                   </Grid>
-                  <Grid sx={{ marginLeft: "3%" }} xs={3} >
+                  <Grid sx={{ marginLeft: { xs: "14px", md: "3%" } }} xs={3} >
                     <MenuItem sx={{
                       color: '#fff',
                       backgroundColor: "#2A88DF",
                       borderRadius: "10px",
-                      width: "auto",
+                      width: "80px",
                       display: "flex",
                       fontFamily: 'Jost',
                       fontWeight: '700',
@@ -327,48 +327,48 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
       </Grid>
 
 
-      <Grid sx={{ marginTop: "2%", justifyContent: "center", marginLeft: "-0.1%" }} container  >
+      <Grid sx={{ marginTop: "2%", justifyContent: "center", marginLeft: { xs: "3%", md: "-0.1%", minWidth: "500px" } }} container  >
         <Grid sx={{ backgroundColor: "#fff", borderRadius: "20px" }} >
 
 
-          <Grid  >
 
-            <Grid
-              container
 
-              display="flex"
-              method='POST'
-              action='/details'
-              component="form"
+          <Grid
+            container
 
-              sx={{
-                '& > :not(style)': { m: 3.4, width: '40ch' }
+            display="flex"
+            method='POST'
+            action='/details'
+            component="form"
 
-              }}
+            sx={{
+              '& > :not(style)': { m: 3.4, width: '40ch' }
 
-              autoComplete="off"
-            >
-              <Grid item xs={5} >
-                <Grid><Typography item sx={{}} variant="h6" fontWeight="700" >
-                  Booking Details
-                </Typography></Grid>
-                <Grid><TextField onChange={takeValue} name='fullname' type='text' id="outlined-basic" label="Full Name" variant="outlined" /></Grid>
-                <Grid><TextField name="number" type='tel' id="outlined-basic" label="Mobile Number" variant="outlined" /></Grid>
-              </Grid>
-              <Grid item sx={{ backgroundColor: "#fff", borderRadius: "20px" }} xs={2} >
-                <Typography variant="h6" fontWeight="700" >
-                  Date
-                </Typography>
-                <DatePick forValue={getDate} />
-              </Grid>
-              <Grid sx={{}} item xs={2} >
-                <Typography variant="h6" fontWeight="700" >
-                  Time Slot
-                </Typography>
-                <Timepick forValue={getTime} />
-              </Grid>
+            }}
 
+            autoComplete="off"
+          >
+            <Grid item xs={5} >
+              <Grid><Typography item sx={{}} variant="h6" fontWeight="700" >
+                Booking Details
+              </Typography></Grid>
+              <Grid><TextField onChange={takeValue} name='fullname' type='text' id="outlined-basic" label="Full Name" variant="outlined" /></Grid>
+              <Grid><TextField name="number" type='tel' id="outlined-basic" label="Mobile Number" variant="outlined" /></Grid>
             </Grid>
+            <Grid item sx={{ backgroundColor: "#fff", borderRadius: "20px" }} xs={2} >
+              <Typography variant="h6" fontWeight="700" >
+                Date
+              </Typography>
+              <DatePick forValue={getDate} />
+            </Grid>
+            <Grid sx={{}} item xs={2} >
+              <Typography variant="h6" fontWeight="700" >
+                Time Slot
+              </Typography>
+              <Timepick forValue={getTime} />
+            </Grid>
+
+
 
 
           </Grid>
@@ -424,7 +424,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                 id="panel3bh-header"
               >
                 <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
-                Dish 3
+                  Dish 3
                 </Typography>
 
               </AccordionSummary>
@@ -464,7 +464,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                 </Typography>
               }
               subheader={
-                <Grid sx={{ textAlign:"center" ,color: "white" }} container >
+                <Grid sx={{ textAlign: "center", color: "white" }} container >
                   <Grid xs={4}>
                     <Typography variant="h7" fontWeight="700" >
                       Item
@@ -486,8 +486,8 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
             />
 
             <CardContent>
-              <Grid sx={{ textAlign:"center" ,color: "#282828" }} container >
-                <Grid  xs={4}>
+              <Grid sx={{ textAlign: "center", color: "#282828" }} container >
+                <Grid xs={4}>
                   <Typography variant="h7" fontWeight="700" >
                     Kaju Butter Masala
                   </Typography>

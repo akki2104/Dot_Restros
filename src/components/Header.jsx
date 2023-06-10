@@ -18,7 +18,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 // import Divider from '@mui/material/Divider';
 // import AdbIcon from '@mui/icons-material/Adb';
-const pages = ['Home', 'Plan Meal', 'Contact Us'];
+const pages = ['Home', 'My Orders', 'Contact Us'];
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const logo = "/images/LOGO.png";
@@ -100,18 +100,18 @@ const Header = () => {
     }} className='header_main' position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'center'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }} >
           <img className='dosrestros_logo_big' src={logo} alt="dotrestrosLogo" style={{
-            width: '5%', height: '5%', marginLeft: '5.5%', marginRight:'4%',
+            width: '5%', height: '5%', marginLeft: '5.5%', marginRight: '4%',
             //we have to change display to none for mobile version using media queries
           }} />
 
 
           {/* search bar */}
-          <Search className='search_box' sx={{ display: { xs: 'none', md: 'flex' },height:'30px' }}>
+          <Search className='search_box' sx={{ display: { xs: 'none', md: 'flex' }, height: '30px' }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -156,7 +156,9 @@ const Header = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Link to="/">
+                    <Typography color='#282828' textAlign="center">{page}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -178,12 +180,17 @@ const Header = () => {
               <MenuItem
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ m: 2, color: '#282828', display: 'block', fontWeight: '700' }}
+
+                sx={{ m: 2, display: 'block' }}
               >
-                {page}
-                
+                <Link to="/">
+                  <Typography color='#282828' fontWeight='700' >
+                    {page}
+                  </Typography>
+                </Link>
+
               </MenuItem>
-              
+
             ))}
             {/* <Divider orientation="vertical" variant="middle" flexItem sx={{width:'5px',backgroundColor:'#2A88DF',borderRadius:'5px' }} /> */}
           </Box>
