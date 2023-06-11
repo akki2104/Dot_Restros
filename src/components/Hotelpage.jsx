@@ -26,8 +26,31 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { styled } from '@mui/material/styles';
+// reviews imports
+import Avatar from '@mui/material/Avatar';
+// import IconButton from '@mui/material/IconButton';
+import { red } from '@mui/material/colors';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import "../App.css"
 import Hotellist from "./Hotellist"
+// import { Scale } from '@mui/icons-material';
+
+
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 5,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor:'yellow',
+  },
+}));
 
 
 
@@ -61,7 +84,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
   })
 
   console.log(hotel)
-
+  console.log(hotel.menu)
   // let name, value;
   const takeValue = (v) => {
 
@@ -382,59 +405,34 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
       <Grid sx={{ display: { xs: "flex" }, marginTop: "2%", justifyContent: "center", marginLeft: '-1.8%' }} container spacing={2}>
         <Grid item xs={12} md={6} >
           <div>
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
-                  Dish 1
-                </Typography>
 
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-                  Aliquam eget maximus est, id dignissim quam.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2bh-content"
-                id="panel2bh-header"
-              >
-                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}> Dish 2</Typography>
+            {hotel.menu.map((item, index) => {
+              const panel = "panel" + String(index + 1)
+              console.log(panel)
+              return (
+                <Accordion expanded={expanded === panel} onChange={handleChange(panel)}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel3bh-content"
+                    id="panel3bh-header"
+                  >
+                    <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
+                      {item}
+                    </Typography>
 
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-                  varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-                  laoreet.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel3bh-content"
-                id="panel3bh-header"
-              >
-                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>
-                  Dish 3
-                </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
+                      amet egestas eros, vitae egestas augue. Duis vel est augue.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              )
+            })}
 
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                  amet egestas eros, vitae egestas augue. Duis vel est augue.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+
+
             <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -508,6 +506,179 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
 
 
           </Card>
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{ display: { xs: "flex" }, marginTop: "5%", justifyContent: "center", marginLeft: { xs: "3%", md: "-1.6%" } }} spacing={0} >
+        <Grid item xs={12} md={6} >
+          <Card sx={{ width: 'auto', minWidth: "500px", height: 'auto', borderRadius: '20px', boxShadow: 0 }}>
+            <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", marginLeft: "2%" }}
+              title={
+                <Grid container >
+                  <Typography variant="h5" fontWeight="700" >
+                    Top Reviews
+                  </Typography>
+                  <MenuItem sx={{
+                    color: '#fff',
+                    backgroundColor: "#2A88DF",
+                    borderRadius: "10px",
+                    width: "auto",
+                    display: "flex",
+                    fontFamily: 'Jost',
+                    fontWeight: '700',
+                    ml: 'auto',
+                    '&:hover': {
+                      backgroundColor: '#2475bf',
+                    }
+                  }} ><Link to={`/reviews`} >Add review</Link></MenuItem>
+                </Grid>
+              }
+            />
+            <CardContent>
+              <Card sx={{ boxShadow: "none" }} >
+                <CardHeader
+                sx={{padding:'0 0 0 2%'}}
+                  avatar={
+                    <Avatar sx={{  bgcolor: red[500] }} aria-label="avatar">
+                      A
+                    </Avatar>
+                  }
+
+                  title={
+                    <Typography variant="h7" fontWeight="700" >
+                      Akash Yadav
+                    </Typography>
+                  }
+
+                />
+                <CardContent sx={{padding:'0 0 0 2%', marginLeft: "8%" }} >
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam aliquid dolor at molestias. Consequuntur, necessitatibus labore dicta recusandae deserunt ut tenetur aperiam ducimus ratione excepturi praesentium totam perspiciatis similique minus dolor autem a assumenda nostrum aliquid repudiandae iste obcaecati nemo modi. Ad reiciendis mollitia quis porro ullam, molestiae nobis officia.
+                </CardContent>
+              </Card>
+              <Card sx={{ boxShadow: "none" }} >
+                <CardHeader
+                sx={{padding:'0 0 0 2%'}}
+                  avatar={
+                    <Avatar sx={{  bgcolor: red[500] }} aria-label="avatar">
+                      H
+                    </Avatar>
+                  }
+
+                  title={
+                    <Typography variant="h7" fontWeight="700" >
+                      Harsh Singh
+                    </Typography>
+                  }
+
+                />
+                <CardContent sx={{padding:'0 0 0 2%', marginLeft: "8%" }} >
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam aliquid dolor at molestias. Consequuntur, necessitatibus labore dicta recusandae deserunt ut tenetur aperiam ducimus ratione excepturi praesentium totam perspiciatis similique minus dolor autem a assumenda nostrum aliquid repudiandae iste obcaecati nemo modi. Ad reiciendis mollitia quis porro ullam, molestiae nobis officia.
+                </CardContent>
+              </Card>
+
+            </CardContent>
+          </Card>
+
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ paddingLeft: "%", marginLeft: "10%", width: '505px', height: '470px', borderRadius: '20px', boxShadow: 0 }} >
+
+
+            <Card sx={{ boxShadow: 0 }} >
+              <CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      5 star
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={33} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      4 star
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={30} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      3 star
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={20} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      2 star
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={50} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "10% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      Staff
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={10} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      Food
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={40} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      Ambience
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={45} />
+                </CardContent>
+                <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
+                  title={
+
+                    <Typography variant="h7" fontWeight="700" >
+                      Services
+                    </Typography>
+                  }
+                />
+                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                  <BorderLinearProgress variant="determinate" value={8} />
+                </CardContent>
+                
+              </CardContent>
+            </Card>
+          </Card>
+
         </Grid>
       </Grid>
 

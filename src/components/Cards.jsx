@@ -49,7 +49,7 @@ const Hotelcard=(props)=> {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          Flat 10% off on total bill
+          Flat <span style={{ color: "#2A88DF" }} > {props.discount} </span> off on total bill
         </Typography>
       </CardContent>
      
