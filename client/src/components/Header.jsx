@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React,{useContext} from 'react';
+import { Link } from "react-router-dom";
 import "../App.css"
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -15,13 +16,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 // import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { UserContext } from '../App';
+import zIndex from '@mui/material/styles/zIndex';
 // import Divider from '@mui/material/Divider';
 // import AdbIcon from '@mui/icons-material/Adb';
-
-// ----------------------Singh------------------------
-import { Link } from "react-router-dom";
-// ----------------------Singh------------------------
 const pages = ['Home', 'Plan Meal', 'Contact Us'];
+
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const logo = "./images/LOGO.png";
 // 
@@ -72,48 +72,76 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const Header = () => {
+
+  const {state,dispatch} = useContext(UserContext);
+  const RenderMenu = ()=>{
+    if(state){
+      return (
+        <>
+        <Link to="/logout" ><MenuItem className='logsout_big' sx={{
+            color: '#fff',
+            backgroundColor: "#2A88DF",
+            borderRadius: "20px",
+            padding: "8px 20px 8px 20px",
+
+            fontFamily: 'Jost',
+            fontWeight: '700',
+            mr: '5.5%',
+            '&:hover': {
+              backgroundColor: '#2475bf',
+            }
+          }} >Logout</MenuItem></Link>
+        </>
+      )
+    }
+    else{
+      return (
+        <>
+        <Link to="/register" ><MenuItem className='logsin_big' sx={{
+            color: '#fff',
+            backgroundColor: "#2A88DF",
+            borderRadius: "20px",
+            padding: "8px 20px 8px 20px",
+            fontFamily: 'Jost',
+            fontWeight: '700',
+            mr: '5.5%',
+            '&:hover': {
+              backgroundColor: '#2475bf',
+            }
+          }} >Login/Signup</MenuItem></Link>
+        </>
+      )
+    }
+  }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-
-  // the commented parts below are to show profile section of customer on nav bar.........dont touch right now
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  // const handleOpenUserMenu = (event) => {
-  // setAnchorElUser(event.currentTarget);
-  // };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  // const handleCloseUserMenu = () => {
-  // setAnchorElUser(null);
-  // };
-
   return (
     <AppBar style={{
       backgroundColor: '#fff',
       color: '#2A88DF',
-      boxShadow: "none"
-
+      boxShadow: "none",
+      zIndex:"20000"
     }} className='header_main' position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'center'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }} >
           <img className='dosrestros_logo_big' src={logo} alt="dotrestrosLogo" style={{
-            width: '5%', height: '5%', marginLeft: '7%', marginRight:'4%',
+            width: '5%', height: '5%', marginLeft: '5.5%', marginRight: '4%',
             //we have to change display to none for mobile version using media queries
           }} />
 
 
           {/* search bar */}
-          <Search className='search_box' sx={{ display: { xs: 'none', md: 'flex' },height:'30px' }}>
+          <Search className='search_box' sx={{ display: { xs: 'none', md: 'flex' }, height: '30px' }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -183,76 +211,14 @@ const Header = () => {
                 sx={{ m: 2, color: '#282828', display: 'block', fontWeight: '700' }}
               >
                 {page}
-                
+
               </MenuItem>
-              
+
             ))}
             {/* <Divider orientation="vertical" variant="middle" flexItem sx={{width:'5px',backgroundColor:'#2A88DF',borderRadius:'5px' }} /> */}
           </Box>
 
-          {/* following piece of code can be used to show "after login" profile section of customer */}
-
-
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: '2px' }}>
-                <Avatar alt="User_name" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
-          <Link to="/register"><MenuItem className='logsin_big' sx={{
-            color: '#fff',
-            backgroundColor: "#2A88DF",
-            borderRadius: "20px",
-            padding: "8px 20px 8px 20px",
-
-            fontFamily: 'Jost',
-            fontWeight: '700',
-            mr: '7%',
-            '&:hover': {
-              backgroundColor: '#2475bf',
-            }
-          }} >Login/Signup</MenuItem></Link>
-          
-
-
-          <MenuItem className='logsin_small' sx={{
-            color: '#fff',
-            backgroundColor: "#2A88DF",
-            borderRadius: "20px",
-            fontFamily: 'Jost',
-            fontWeight: '700',
-            mr: '7%',
-            '&:hover': {
-              backgroundColor: '#2475bf',
-            }
-          }} >Login</MenuItem>
-
-
-
-
+          <RenderMenu/>
         </Toolbar>
       </Container>
     </AppBar>

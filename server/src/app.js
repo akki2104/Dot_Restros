@@ -8,7 +8,7 @@ const jquery = require("jquery");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const auth = require("./middleware/auth")
+const auth = require("./middleware/authenticate")
 // google
 const session = require("express-session");
 const passport = require("passport");
@@ -58,94 +58,85 @@ hbs.registerPartials(partials_path);
 
 // google
 app.use("/auth/google", gauth);
-app.get("/",(req,res)=>{
-    res.render("index");
-})
-app.get("/secret",auth,(req,res)=>{
-    // console.log(`Cookie: ${req.cookies.jwt}`);
-    res.render("secret");
-})
-app.get("/logout",auth, async(req,res)=>{
-    try {
-        // for single logout
-        // req.user.tokens = req.user.tokens.filter((currElement)=>{
-        //     return currElement.token != req.token;
-        // })
-        // logout from all devices
-        req.user.tokens = [];
+// app.get("/",(req,res)=>{
+//     res.render("index");
+// })
+// app.get("/logout",auth, async(req,res)=>{
+//     try {
+//         req.user.tokens = [];
 
-        res.clearCookie("jwt");
-        console.log("Logout successful");
-        await req.user.save();
-        res.render("register");
-    } catch (error) {
-        res.status(500).send(error);
-    }
-})
-app.get("/register",(req,res)=>{
-    res.render("register");
-})
-//create a new user in our database
-app.post("/registerform",async(req,res)=>{
-    try {
-        const password = req.body.password;
-        const cpassword = req.body.cpassword;
-        if(password === cpassword){
-            const newuser = new Register({
-                name: req.body.name,
-                email: req.body.email,
-                phoneno: req.body.phoneno,
-                password: password,
-                cpassword: cpassword,
-            })
-            const token = await newuser.generateAuthToken();
+//         res.clearCookie("jwt");
+//         console.log("Logout successful");
+//         await req.user.save();
+//         res.render("register");
+//     } catch (error) {
+//         res.status(500).send(error);
+//     }
+// })
+// app.get("/register",(req,res)=>{
+//     res.render("register");
+// })
+// //create a new user in our database
+// app.post("/registerform",async(req,res)=>{
+//     try {
+//         const password = req.body.password;
+//         const cpassword = req.body.cpassword;
+//         if(password === cpassword){
+//             const newuser = new Register({
+//                 name: req.body.name,
+//                 email: req.body.email,
+//                 phoneno: req.body.phoneno,
+//                 password: password,
+//                 cpassword: cpassword,
+//             })
+//             const token = await newuser.generateAuthToken();
 
-            //the res.cookie() function is used to set cookie
-            //name to value.The value paramater may be a string
-            //or object converted to JSON
+//             //the res.cookie() function is used to set cookie
+//             //name to value.The value paramater may be a string
+//             //or object converted to JSON
 
-            res.cookie("jwt",token,{
-                expires: new Date(Date.now()+300000),
-                httpOnly:true
-            });
-            // console.log(cookie);
+//             res.cookie("jwt",token,{
+//                 expires: new Date(Date.now()+300000),
+//                 httpOnly:true
+//             });
+//             // console.log(cookie);
 
-            const registered = await newuser.save();
-            res.status(201).render("index");
-        }else{
-            res.send("password are not matching")
-        }
-    } catch (error) {
-        res.status(400).send("error"+error);
-    }
+//             const registered = await newuser.save();
+//             res.status(201).render("index");
+//         }else{
+//             res.send("password are not matching")
+//         }
+//     } catch (error) {
+//         res.status(400).send("error"+error);
+//     }
     
-})
-//login page form post
-app.post("/loginform",async(req,res)=>{
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
+// })
+// //login page form post
+// app.post("/loginform",async(req,res)=>{
+//     try {
+//         const email = req.body.email;
+//         const password = req.body.password;
 
-        const useremail = await Register.findOne({email:email});
-        const isMatch = await bcrypt.compare(password,useremail.password);
-        const token = await useremail.generateAuthToken();
+//         const useremail = await Register.findOne({email:email});
+//         const isMatch = await bcrypt.compare(password,useremail.password);
+//         const token = await useremail.generateAuthToken();
         
         
-        res.cookie("jwt",token,{
-            expires: new Date(Date.now()+300000),
-            httpOnly:true
-        });
+//         res.cookie("jwt",token,{
+//             expires: new Date(Date.now()+300000),
+//             httpOnly:true
+//         });
         
-        if(isMatch){
-            res.status(201).render("secret")
-        }else{
-            res.send("invalid password credentials")
-        }
+//         if(isMatch){
+//             res.status(201).render("secret")
+//         }else{
+//             res.send("invalid password credentials")
+//         }
 
-    } catch (error) {
-        res.status(400).send("invalid credentials");
-    }
-})
+//     } catch (error) {
+//         res.status(400).send("invalid credentials");
+//     }
+// })
 
 app.listen(port,()=>{
     console.log(`server is running on port no ${port}`);

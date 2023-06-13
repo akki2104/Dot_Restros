@@ -6,6 +6,8 @@ require("../db/conn");
 const User = require("../models/userSchema");
 const Register = require("../models/registers")
 const cookieParser = require("cookie-parser");
+const authenticate = require("../middleware/authenticate");
+
 router.get("/", (req, res) => {
     res.send("Router Running");
 })
@@ -76,5 +78,17 @@ router.post("/loginform",async(req,res)=>{
         res.status(400).send("invalid credentials");
     }
 })
+
+router.get("/secret",authenticate,(req,res)=>{
+    // console.log(`Cookie: ${req.cookies.jwt}`);
+    res.render("secret");
+})
+
+router.get("/logout",(req,res)=>{
+    console.log("Logout Successful");
+    res.clearCookie('jwt', {path: '/'});
+    res.status(200).send("User Logout")
+})
+
 
 module.exports = router;
