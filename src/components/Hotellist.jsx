@@ -5,10 +5,11 @@ const Hotellist=[
         location:"Kamrej, Surat",
         image:"/images/harikrushna.jpeg",
         discount:"10%",
-        menu:[
-            "kaju",
-            "paneer"
-        ]
+        menu:{
+            Kaju:{"Kaju butter":190,"Kaju chutiya":120},
+            Paneer:{"Kadhai paneer":170,"paneer punjabi":100},
+            chicken:{"chicken do pyaza":500,"grilled chicken":210,"hyderabadi biryani":400}
+        }
     },
     {
         id:2,

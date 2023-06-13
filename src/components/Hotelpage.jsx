@@ -25,6 +25,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
@@ -48,7 +50,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor:'yellow',
+    backgroundColor: 'yellow',
   },
 }));
 
@@ -64,11 +66,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 
 
+const Hotelpage = () => {
 
-const Hotelpage = () => {   //de-structuring props and using match to find the particular hotelpage
-  // const [user, setUser] = useState({
-  //   name: ""
-  // })
+  let i = 0;
+
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -83,8 +85,12 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
     )
   })
 
+
   console.log(hotel)
-  console.log(hotel.menu)
+  console.log(Object.values(Object.values(hotel.menu)[0]))
+  console.log(Object.values(Object.values(hotel.menu)[1]))
+  console.log(Object.values(Object.values(hotel.menu)[2]))
+
   // let name, value;
   const takeValue = (v) => {
 
@@ -165,10 +171,15 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                 </Grid>
               </Grid>
               <Grid container >
-                <Grid sx={{ marginTop: "1%" }} xs={6} >
-                  <Typography variant="body2" color="text.secondary"  >
-                    Get Directions on the map
-                  </Typography>
+                <Grid container sx={{ marginTop: "1%", alignItems: "center" }} xs={6} >
+                  <Grid sx={{ display: "flex", alignItems: "center", marginRight: "1%" }} ><img src='/images/map.png' style={{ width: "25px", height: "25px " }} alt='cuisine logo' /></Grid>
+
+                  <Grid>
+                    <Typography variant="body2" color="text.secondary" >
+                      Get directions on map
+                    </Typography>
+                  </Grid>
+
                 </Grid>
                 <Grid container sx={{ paddingLeft: { xs: "0", md: "7%" }, marginTop: "0%" }} xs={6} >
                   <Grid sx={{ marginLeft: { xs: "40%" } }} xs={3} >
@@ -406,7 +417,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
         <Grid item xs={12} md={6} >
           <div>
 
-            {hotel.menu.map((item, index) => {
+            {Object.keys(hotel.menu).map((item, index) => {
               const panel = "panel" + String(index + 1)
               console.log(panel)
               return (
@@ -421,33 +432,48 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
 
                   </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                      amet egestas eros, vitae egestas augue. Duis vel est augue.
-                    </Typography>
-                  </AccordionDetails>
+
+                  {(Object.keys(Object.values(hotel.menu)[i++])).map((type, index) => {
+                    let k = i - 1;
+                    return (
+                      <AccordionDetails>
+                        <Grid container sx={{ justifyContent: "center", alignItems: "center" }} >
+                          <Grid xs={4} sx={{ textAlign: "center" }} >
+                            {type}
+                          </Grid>
+                          <Grid xs={4} sx={{ textAlign: "center" }} >
+                            {Object.values(Object.values(hotel.menu)[k])[index]}
+                          </Grid>
+                          <Grid xs={4} sx={{ display: "flex", justifyContent: "center",alignItems:'center' }} >
+
+                            <AddCircleIcon onClick={() => {
+                              console.log("hi")
+                            }} fontSize='large' sx={{
+                              '&:hover': {
+
+                                color: "#2a8fff"
+                              }, cursor: "pointer", color: '#2a88df'
+                            }} />1
+                            <RemoveCircleIcon fontSize='large' sx={{
+                              '&:hover': {
+
+                                color: "#2a8fff"
+                              }, cursor: "pointer", color: '#2a88df'
+                            }} />
+                          </Grid>
+                        </Grid>
+                      </AccordionDetails>
+                    )
+
+                  })}
                 </Accordion>
               )
             })}
 
 
 
-            <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel4bh-content"
-                id="panel4bh-header"
-              >
-                <Typography Typography variant="h6" fontWeight="700" sx={{ width: '33%', flexShrink: 0 }}>Dish 4</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                  amet egestas eros, vitae egestas augue. Duis vel est augue.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+
+
           </div>
         </Grid>
         <Grid item xs={12} md={4} >
@@ -537,9 +563,9 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
             <CardContent>
               <Card sx={{ boxShadow: "none" }} >
                 <CardHeader
-                sx={{padding:'0 0 0 2%'}}
+                  sx={{ padding: '0 0 0 2%' }}
                   avatar={
-                    <Avatar sx={{  bgcolor: red[500] }} aria-label="avatar">
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="avatar">
                       A
                     </Avatar>
                   }
@@ -551,15 +577,15 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                   }
 
                 />
-                <CardContent sx={{padding:'0 0 0 2%', marginLeft: "8%" }} >
+                <CardContent sx={{ padding: '0 0 0 2%', marginLeft: "8%" }} >
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam aliquid dolor at molestias. Consequuntur, necessitatibus labore dicta recusandae deserunt ut tenetur aperiam ducimus ratione excepturi praesentium totam perspiciatis similique minus dolor autem a assumenda nostrum aliquid repudiandae iste obcaecati nemo modi. Ad reiciendis mollitia quis porro ullam, molestiae nobis officia.
                 </CardContent>
               </Card>
               <Card sx={{ boxShadow: "none" }} >
                 <CardHeader
-                sx={{padding:'0 0 0 2%'}}
+                  sx={{ padding: '0 0 0 2%' }}
                   avatar={
-                    <Avatar sx={{  bgcolor: red[500] }} aria-label="avatar">
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="avatar">
                       H
                     </Avatar>
                   }
@@ -571,7 +597,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                   }
 
                 />
-                <CardContent sx={{padding:'0 0 0 2%', marginLeft: "8%" }} >
+                <CardContent sx={{ padding: '0 0 0 2%', marginLeft: "8%" }} >
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam aliquid dolor at molestias. Consequuntur, necessitatibus labore dicta recusandae deserunt ut tenetur aperiam ducimus ratione excepturi praesentium totam perspiciatis similique minus dolor autem a assumenda nostrum aliquid repudiandae iste obcaecati nemo modi. Ad reiciendis mollitia quis porro ullam, molestiae nobis officia.
                 </CardContent>
               </Card>
@@ -594,7 +620,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={33} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -605,7 +631,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={30} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -616,7 +642,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={20} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -627,7 +653,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={50} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "10% 0 2% 3%" }}
@@ -638,7 +664,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={10} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -649,7 +675,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={40} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -660,7 +686,7 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={45} />
                 </CardContent>
                 <CardHeader sx={{ backgroundColor: "white", color: "#2A88DF", padding: "2% 0 2% 3%" }}
@@ -671,10 +697,10 @@ const Hotelpage = () => {   //de-structuring props and using match to find the p
                     </Typography>
                   }
                 />
-                <CardContent sx={{padding:"0px 0px 0px 3.5%"}} >
+                <CardContent sx={{ padding: "0px 0px 0px 3.5%" }} >
                   <BorderLinearProgress variant="determinate" value={8} />
                 </CardContent>
-                
+
               </CardContent>
             </Card>
           </Card>
