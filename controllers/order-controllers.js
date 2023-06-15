@@ -91,4 +91,20 @@ const orderPayment = async (req, res) => {
   }
 };
 
-module.exports = { sendNewOrder, findOrderById, cancelOrderById, orderPayment };
+const getAllOrders = async (req, res) => {
+  try {
+    const ordersList = await Order.find();
+    res.json(ordersList);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  sendNewOrder,
+  findOrderById,
+  cancelOrderById,
+  orderPayment,
+  getAllOrders,
+};
