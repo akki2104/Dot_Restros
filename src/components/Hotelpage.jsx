@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './Header'
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
@@ -38,6 +38,7 @@ import { red } from '@mui/material/colors';
 
 import "../App.css"
 import Hotellist from "./Hotellist"
+import { useState } from 'react';
 // import { Scale } from '@mui/icons-material';
 
 
@@ -68,18 +69,23 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Hotelpage = () => {
 
+
+
+
+
   let i = 0;
   const dishtype = document.querySelectorAll('[id^="dishtype"]');
 
 
   const [expanded, setExpanded] = React.useState(false);
   const [qtty, setQty] = React.useState(1);
-  const [dishObject, setDishObject] = React.useState([{
+  const [dishObject, setDishObject] = React.useState({
     name: "",
     qty: "",
     price: ""
-  }]);
+  });
   const [dishArray, setDishArray] = React.useState([])
+  const [newArray, setnewArray] = React.useState([])
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -92,6 +98,78 @@ const Hotelpage = () => {
       String(h.id) === id
     )
   })
+
+  const [sumDish, setsumDish] = useState()
+
+  useEffect(() => {
+    const arr = Object.keys(hotel.menu).map((item) => {
+      console.log(item.name,item.price)
+      return {
+        name: item.name,
+        price:item.price,
+        qty:0
+      }
+    })
+    setnewArray(arr)
+    console.log(Object.keys(hotel.menu))
+    console.log("hello rutwik" , arr);
+  }, [])
+
+
+
+  useEffect(() => {
+
+
+    const summary = dishArray.map((dish, index) => {
+      return (
+        <Grid sx={{ textAlign: "center", color: "#282828", marginBottom: "2%" }} container >
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="700" >
+              {dish.name}
+
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="700" >
+              {dish.qty}
+
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="700" >
+              {dish.price}
+
+            </Typography>
+          </Grid>
+
+        </Grid>
+      )
+    })
+    setsumDish(summary)
+
+    console.log("..........")
+
+    console.log(dishArray)
+    console.log(summary)
+
+
+  }, [dishArray])
+
+  useEffect(() => {
+    if (dishObject) {
+      setDishArray(
+        [
+          ...dishArray,
+          dishObject
+        ]
+      )
+    }
+  }, [dishObject])
+
+
+
+
+
 
 
 
@@ -467,42 +545,40 @@ const Hotelpage = () => {
                           <Grid xs={4} sx={{ display: "flex", justifyContent: "center", alignItems: 'center' }} >
 
                             <AddCircleIcon
-                              onClick={(e) => {
+                              onClick={() => {
                                 // console.log(e)
                                 // const {name,qty}=[dishObject]
 
 
 
-                                console.log(dishtype)
+                                console.log("cliced")
                                 if (dishID == "dishtype" + String(type)) {
-                                  console.log(dishID)
+                                  // console.log(dishID)
 
-                                  console.log(qtty)
-                                  setDishObject(() => {
-                                    return {
+                                  // console.log(qtty)
 
-                                      
-                                      name: type,
-                                      qty: String(qtty + 1),
-                                      price: String(Object.values(Object.values(hotel.menu)[k])[index])
-
-                                    }
-                                  }
-                                  )
-
-                                  setDishArray((oldValues) => {
-                                    if (dishObject.name !== "") {
-                                      return [...oldValues, dishObject]
-                                    }
+                                  setDishObject({
+                                    name: type,
+                                    qty: String(qtty + 1),
+                                    price: String(Object.values(Object.values(hotel.menu)[k])[index])
                                   })
-                                  console.log(dishObject)
+
+
+
+
+                                  // console.log(dishObject)
                                   console.log(dishArray)
+                                  // (oldValues) => {
+                                  // if (dishObject.name !== "") {
+                                  //   return [...oldValues, dishObject]
+                                  // }
 
 
 
                                   // }
                                 }
-                              }}
+                              }
+                              }
                               fontSize='large' sx={{
                                 '&:hover': {
 
@@ -565,33 +641,7 @@ const Hotelpage = () => {
             />
 
             <CardContent>
-              {
-                dishArray.map((dish, index) => {
-                  return (
-              <Grid sx={{ textAlign: "center", color: "#282828", marginBottom: "2%" }} container >
-                <Grid xs={4}>
-                  <Typography variant="h7" fontWeight="700" >
-                    {dish.name}
-                  
-                  </Typography>
-                </Grid>
-                <Grid xs={4}>
-                  <Typography variant="h7" fontWeight="700" >
-                    {dish.qty}
-                    
-                  </Typography>
-                </Grid>
-                <Grid xs={4}>
-                  <Typography variant="h7" fontWeight="700" >
-                    {dish.price}
-                    
-                  </Typography>
-                </Grid>
-
-              </Grid>
-              )
-                })
-              }
+              {sumDish}
             </CardContent>
 
 
