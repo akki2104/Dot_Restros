@@ -69,9 +69,17 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 const Hotelpage = () => {
 
   let i = 0;
+  const dishtype = document.querySelectorAll('[id^="dishtype"]');
 
 
   const [expanded, setExpanded] = React.useState(false);
+  const [qtty, setQty] = React.useState(1);
+  const [dishObject, setDishObject] = React.useState([{
+    name: "",
+    qty: "",
+    price: ""
+  }]);
+  const [dishArray, setDishArray] = React.useState([])
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -84,6 +92,17 @@ const Hotelpage = () => {
       String(h.id) === id
     )
   })
+
+
+
+  // const dishDetails=(name,qty)=>{
+  //   console.log(dishtype)
+  //   // if(dishtype.innerHTML===name){
+  //   //   console.log("macthing")
+  //   // }
+  //   console.log(name)
+  //   console.log(qty)
+  // }
 
 
   console.log(hotel)
@@ -372,7 +391,7 @@ const Hotelpage = () => {
 
             display="flex"
             method='POST'
-            action='/details'
+            action='/orders/send'
             component="form"
 
             sx={{
@@ -435,25 +454,61 @@ const Hotelpage = () => {
 
                   {(Object.keys(Object.values(hotel.menu)[i++])).map((type, index) => {
                     let k = i - 1;
+                    let dishID = "dishtype" + String(type);
                     return (
                       <AccordionDetails>
                         <Grid container sx={{ justifyContent: "center", alignItems: "center" }} >
-                          <Grid xs={4} sx={{ textAlign: "center" }} >
+                          <Grid id={dishID} xs={4} sx={{ textAlign: "center" }} >
                             {type}
                           </Grid>
                           <Grid xs={4} sx={{ textAlign: "center" }} >
                             {Object.values(Object.values(hotel.menu)[k])[index]}
                           </Grid>
-                          <Grid xs={4} sx={{ display: "flex", justifyContent: "center",alignItems:'center' }} >
+                          <Grid xs={4} sx={{ display: "flex", justifyContent: "center", alignItems: 'center' }} >
 
-                            <AddCircleIcon onClick={() => {
-                              console.log("hi")
-                            }} fontSize='large' sx={{
-                              '&:hover': {
+                            <AddCircleIcon
+                              onClick={(e) => {
+                                // console.log(e)
+                                // const {name,qty}=[dishObject]
 
-                                color: "#2a8fff"
-                              }, cursor: "pointer", color: '#2a88df'
-                            }} />1
+
+
+                                console.log(dishtype)
+                                if (dishID == "dishtype" + String(type)) {
+                                  console.log(dishID)
+
+                                  console.log(qtty)
+                                  setDishObject(() => {
+                                    return {
+
+                                      
+                                      name: type,
+                                      qty: String(qtty + 1),
+                                      price: String(Object.values(Object.values(hotel.menu)[k])[index])
+
+                                    }
+                                  }
+                                  )
+
+                                  setDishArray((oldValues) => {
+                                    if (dishObject.name !== "") {
+                                      return [...oldValues, dishObject]
+                                    }
+                                  })
+                                  console.log(dishObject)
+                                  console.log(dishArray)
+
+
+
+                                  // }
+                                }
+                              }}
+                              fontSize='large' sx={{
+                                '&:hover': {
+
+                                  color: "#2a8fff"
+                                }, cursor: "pointer", color: '#2a88df'
+                              }} />{ }
                             <RemoveCircleIcon fontSize='large' sx={{
                               '&:hover': {
 
@@ -501,7 +556,7 @@ const Hotelpage = () => {
                   </Grid>
                   <Grid xs={4}>
                     <Typography variant="h7" fontWeight="700" >
-                      Net Total
+                      Price
                     </Typography>
                   </Grid>
 
@@ -510,24 +565,33 @@ const Hotelpage = () => {
             />
 
             <CardContent>
-              <Grid sx={{ textAlign: "center", color: "#282828" }} container >
+              {
+                dishArray.map((dish, index) => {
+                  return (
+              <Grid sx={{ textAlign: "center", color: "#282828", marginBottom: "2%" }} container >
                 <Grid xs={4}>
                   <Typography variant="h7" fontWeight="700" >
-                    Kaju Butter Masala
+                    {dish.name}
+                  
                   </Typography>
                 </Grid>
                 <Grid xs={4}>
                   <Typography variant="h7" fontWeight="700" >
-                    1
+                    {dish.qty}
+                    
                   </Typography>
                 </Grid>
                 <Grid xs={4}>
                   <Typography variant="h7" fontWeight="700" >
-                    190
+                    {dish.price}
+                    
                   </Typography>
                 </Grid>
 
               </Grid>
+              )
+                })
+              }
             </CardContent>
 
 
