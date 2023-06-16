@@ -78,7 +78,7 @@ const Hotelpage = () => {
 
 
   const [expanded, setExpanded] = React.useState(false);
-  const [qtty, setQty] = React.useState(1);
+  // const [qtty, setQty] = React.useState(1);
   const [dishObject, setDishObject] = React.useState({
     name: "",
     qty: "",
@@ -552,14 +552,14 @@ const Hotelpage = () => {
 
 
                                 console.log("cliced")
-                                if (dishID == "dishtype" + String(type)) {
+                                if (dishID === "dishtype" + String(type)) {
                                   // console.log(dishID)
 
                                   // console.log(qtty)
 
                                   setDishObject({
                                     name: type,
-                                    qty: String(qtty + 1),
+                                    qty: String(1),
                                     price: String(Object.values(Object.values(hotel.menu)[k])[index])
                                   })
 
