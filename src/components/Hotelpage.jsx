@@ -74,7 +74,7 @@ const Hotelpage = () => {
 
 
   let i = 0;
-  const dishtype = document.querySelectorAll('[id^="dishtype"]');
+  // const dishtype = document.querySelectorAll('[id^="dishtype"]');
 
 
   const [expanded, setExpanded] = React.useState(false);
@@ -85,7 +85,7 @@ const Hotelpage = () => {
     price: ""
   });
   const [dishArray, setDishArray] = React.useState([])
-  const [newArray, setnewArray] = React.useState([])
+  // const [newArray, setnewArray] = React.useState([])
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -101,19 +101,19 @@ const Hotelpage = () => {
 
   const [sumDish, setsumDish] = useState()
 
-  useEffect(() => {
-    const arr = Object.keys(hotel.menu).map((item) => {
-      console.log(item.name,item.price)
-      return {
-        name: item.name,
-        price:item.price,
-        qty:0
-      }
-    })
-    setnewArray(arr)
-    console.log(Object.keys(hotel.menu))
-    console.log("hello rutwik" , arr);
-  }, [])
+  // useEffect(() => {
+  //   const arr = Object.keys(hotel.menu).map((item) => {
+  //     console.log(item.name,item.price)
+  //     return {
+  //       name: item.name,
+  //       price:item.price,
+  //       qty:0
+  //     }
+  //   })
+  //   setnewArray(arr)
+  //   console.log(Object.keys(hotel.menu))
+  //   console.log("hello rutwik" , arr);
+  // }, [])
 
 
 
