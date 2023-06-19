@@ -4,8 +4,6 @@ import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import { Link, useParams } from "react-router-dom";
 import MenuItem from '@mui/material/MenuItem';
-// import Box from '@mui/material/Box';
-// import { useState } from 'react';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -16,32 +14,21 @@ import TextField from '@mui/material/TextField';
 
 import DatePick from './Datepick';
 import Timepick from './Timepick';
-// import userEvent from '@testing-library/user-event';
 
 
-
-//accordion for menu items of hotel
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
-// reviews imports
 import Avatar from '@mui/material/Avatar';
-// import IconButton from '@mui/material/IconButton';
 import { red } from '@mui/material/colors';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
-
 import "../App.css"
 import Hotellist from "./Hotellist"
 import { useState } from 'react';
-// import { Scale } from '@mui/icons-material';
-
-
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 5,
@@ -55,41 +42,143 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-
-
-
-
-
-
-
-
-
-
-
-
 const Hotelpage = () => {
 
-
-
-
-
   let i = 0;
-  // const dishtype = document.querySelectorAll('[id^="dishtype"]');
-
-
-  const [expanded, setExpanded] = React.useState(false);
-  // const [qtty, setQty] = React.useState(1);
-  const [dishObject, setDishObject] = React.useState({
+  const [expanded, setExpanded] = useState(false);
+  const [plus, setPlus] = useState();
+  const [dishObject, setDishObject] = useState({
     name: "",
     qty: "",
     price: ""
   });
-  const [dishArray, setDishArray] = React.useState([])
-  // const [newArray, setnewArray] = React.useState([])
+  const [dishArray, setDishArray] = useState([])
+  const [sumDish, setsumDish] = useState(true)
+  const [total, setTotal] = useState(0)
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    console.log("ultra first dishobject", dishObject)
+    if (dishObject.name !== "") {
+      console.log("changed dish object ", dishObject);
+      let existing = false;
+      dishArray.forEach(obj => {
+
+        if (obj.name === dishObject.name) {
+          return existing = true;
+        }
+
+
+      })
+
+      if (existing) {
+        const newdishArray = dishArray.map(obj => {
+
+          if (obj.name === dishObject.name) {
+            console.log("matched dishobject", dishObject)
+            console.log("corresponding matched disharray", dishArray)
+
+            if (plus) return { ...obj, qty: (obj.qty) + 1 };
+            else return { ...obj, qty: obj.qty - 1 }
+          }
+
+
+
+          else { console.log("corresponding not matched disharray", dishArray); return obj };
+        });
+        console.log("the new array this disharray", newdishArray)
+
+        setDishArray(newdishArray);
+        console.log("the disharray after setting to observe", dishArray)
+      } else {
+        setDishArray(
+          [
+            ...dishArray,
+            dishObject
+          ]
+        )
+      }
+    }
+  }, [plus, dishObject])
+
+
+
+
+
+  useEffect(() => {
+
+    setTotal(0)
+
+    dishArray.forEach((obj => {
+      setTotal(total + (Number(obj.price) * Number(obj.qty)))
+    }))
+
+
+
+
+
+
+
+    const summary = dishArray.map((dish) => {
+
+      return (
+        <Grid sx={{ textAlign: "center", color: "#282828", marginBottom: "2%" }} container >
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="400" >
+              {dish.name}
+
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="400" >
+              {dish.qty}
+
+            </Typography>
+          </Grid>
+          <Grid xs={4}>
+            <Typography variant="h7" fontWeight="400" >
+              {dish.price}
+
+            </Typography>
+          </Grid>
+
+        </Grid>
+      )
+
+    })
+    setsumDish(summary)
+
+
+
+
+
+    // eslint-disable-next-line
+  }, [dishArray])
+
+
+
+
+  const takeValue = (v) => {
+    // console.log(v.target.value)
+
+  }
+  const getDate = (v) => {
+    // console.log(v.$D)
+    // console.log(v.$M + 1)
+    // console.log(v.$y)
+  }
+  const getTime = (v) => {
+    // console.log(v.$H)
+    // console.log(v.$m)
+  }
+
 
   const { id } = useParams()
 
@@ -99,116 +188,9 @@ const Hotelpage = () => {
     )
   })
 
-  const [sumDish, setsumDish] = useState()
-
-  // useEffect(() => {
-  //   const arr = Object.keys(hotel.menu).map((item) => {
-  //     console.log(item.name,item.price)
-  //     return {
-  //       name: item.name,
-  //       price:item.price,
-  //       qty:0
-  //     }
-  //   })
-  //   setnewArray(arr)
-  //   console.log(Object.keys(hotel.menu))
-  //   console.log("hello rutwik" , arr);
-  // }, [])
-
-
-
-  useEffect(() => {
-
-
-    const summary = dishArray.map((dish, index) => {
-      return (
-        <Grid sx={{ textAlign: "center", color: "#282828", marginBottom: "2%" }} container >
-          <Grid xs={4}>
-            <Typography variant="h7" fontWeight="700" >
-              {dish.name}
-
-            </Typography>
-          </Grid>
-          <Grid xs={4}>
-            <Typography variant="h7" fontWeight="700" >
-              {dish.qty}
-
-            </Typography>
-          </Grid>
-          <Grid xs={4}>
-            <Typography variant="h7" fontWeight="700" >
-              {dish.price}
-
-            </Typography>
-          </Grid>
-
-        </Grid>
-      )
-    })
-    setsumDish(summary)
-
-    console.log("..........")
-
-    console.log(dishArray)
-    console.log(summary)
-
-
-  }, [dishArray])
-
-  useEffect(() => {
-    if (dishObject) {
-      setDishArray(
-        [
-          ...dishArray,
-          dishObject
-        ]
-      )
-    }
-  }, [dishObject])
-
-
-
-
-
-
-
-
-  // const dishDetails=(name,qty)=>{
-  //   console.log(dishtype)
-  //   // if(dishtype.innerHTML===name){
-  //   //   console.log("macthing")
-  //   // }
-  //   console.log(name)
-  //   console.log(qty)
-  // }
-
-
-  console.log(hotel)
-  console.log(Object.values(Object.values(hotel.menu)[0]))
-  console.log(Object.values(Object.values(hotel.menu)[1]))
-  console.log(Object.values(Object.values(hotel.menu)[2]))
-
-  // let name, value;
-  const takeValue = (v) => {
-
-    // console.log(name)
-
-    console.log(v.target.value)
-
-  }
-  const getDate = (v) => {
-    // setDate(currDate)
-    console.log(v.$D)
-    console.log(v.$M + 1)
-    console.log(v.$y)
-  }
-  const getTime = (v) => {
-    console.log(v.$H)
-    console.log(v.$m)
-  }
-
-
-
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
 
   return (
@@ -516,7 +498,6 @@ const Hotelpage = () => {
 
             {Object.keys(hotel.menu).map((item, index) => {
               const panel = "panel" + String(index + 1)
-              console.log(panel)
               return (
                 <Accordion expanded={expanded === panel} onChange={handleChange(panel)}>
                   <AccordionSummary
@@ -546,51 +527,45 @@ const Hotelpage = () => {
 
                             <AddCircleIcon
                               onClick={() => {
-                                // console.log(e)
-                                // const {name,qty}=[dishObject]
+                                setPlus(true)
+
+                                setDishObject({
+                                  name: String(type),
+                                  qty: 1,
+                                  price: String(Object.values(Object.values(hotel.menu)[k])[index])
+                                })
+                                console.log("dishobject near icon", dishObject)
 
 
 
-                                console.log("cliced")
-                                if (dishID === "dishtype" + String(type)) {
-                                  // console.log(dishID)
-
-                                  // console.log(qtty)
-
-                                  setDishObject({
-                                    name: type,
-                                    qty: String(1),
-                                    price: String(Object.values(Object.values(hotel.menu)[k])[index])
-                                  })
-
-
-
-
-                                  // console.log(dishObject)
-                                  console.log(dishArray)
-                                  // (oldValues) => {
-                                  // if (dishObject.name !== "") {
-                                  //   return [...oldValues, dishObject]
-                                  // }
-
-
-
-                                  // }
-                                }
                               }
                               }
+                              // }
+
+
                               fontSize='large' sx={{
                                 '&:hover': {
 
                                   color: "#2a8fff"
                                 }, cursor: "pointer", color: '#2a88df'
                               }} />{ }
-                            <RemoveCircleIcon fontSize='large' sx={{
-                              '&:hover': {
+                            <RemoveCircleIcon onClick={() => {
+                              setPlus(false)
+                              setDishObject({
+                                name: String(type),
+                                qty: 1,
+                                price: String(Object.values(Object.values(hotel.menu)[k])[index])
+                              })
+                              console.log("dishobject near icon", dishObject)
 
-                                color: "#2a8fff"
-                              }, cursor: "pointer", color: '#2a88df'
-                            }} />
+
+                            }}
+                              fontSize='large' sx={{
+                                '&:hover': {
+
+                                  color: "#2a8fff"
+                                }, cursor: "pointer", color: '#2a88df'
+                              }} />
                           </Grid>
                         </Grid>
                       </AccordionDetails>
@@ -608,7 +583,7 @@ const Hotelpage = () => {
           </div>
         </Grid>
         <Grid item xs={12} md={4} >
-          <Card sx={{ padding: "0% ", marginLeft: "6%", width: '505px', height: '525px', borderRadius: '20px', boxShadow: 0 }}>
+          <Card sx={{ padding: "0% ", marginLeft: "6%", width: '505px', height: '700px', borderRadius: '20px', boxShadow: 0, display: "flex", flexDirection: "column" }}>
             <CardHeader
 
               sx={{ backgroundColor: "#2A88DF", borderRadius: "20px", color: "white" }}
@@ -640,9 +615,90 @@ const Hotelpage = () => {
               }
             />
 
-            <CardContent>
+            <CardContent sx={{ maxHeight: "470px", overflow: "auto" }} >
               {sumDish}
             </CardContent>
+            <CardContent sx={{ color: "#2a88df", marginTop: "auto" }} >
+
+              <Grid sx={{ color: "#282828", marginBottom: "2%" }} container >
+                <Grid xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    Total
+
+                  </Typography>
+                </Grid>
+
+                <Grid sx={{ marginLeft: "auto", textAlign: "center" }} xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    {total}
+
+                  </Typography>
+                </Grid>
+
+              </Grid>
+              <Grid sx={{ color: "#282828", marginBottom: "2%" }} container >
+                <Grid xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    Advance
+
+                  </Typography>
+                </Grid>
+
+                <Grid sx={{ marginLeft: "auto", textAlign: "center" }} xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    {0.2 * total}
+
+                  </Typography>
+                </Grid>
+
+              </Grid>
+              <Grid sx={{ color: "#282828", marginBottom: "2%" }} container >
+                <Grid xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    Remaining
+                  </Typography>
+                </Grid>
+
+                <Grid sx={{ marginLeft: "auto", textAlign: "center" }} xs={4}>
+                  <Typography variant="h5" fontWeight="700" >
+                    {total - (0.2 * total)}
+
+                  </Typography>
+                </Grid>
+
+              </Grid>
+              <Grid sx={{ color: "#282828", marginBottom: "2%" }} container >
+                <Grid xs={8}>
+                  <Typography variant="h7" fontWeight="400" >
+                    Pay 20% to confirm your order. Discount will be done at the restaurent.
+                  </Typography>
+                </Grid>
+
+                <Grid sx={{ marginLeft: "auto", textAlign: "center" }} xs={4}>
+
+                  <Link sx={{ justifyContent: "center" }} to="/register" >
+                    <MenuItem className='logsin_big' sx={{
+                      textAlign: "center",
+                      color: '#fff',
+                      backgroundColor: "#2A88DF",
+                      borderRadius: "20px",
+                      padding: "8px 20px 8px 20px",
+
+                      fontFamily: 'Jost',
+                      fontWeight: '700',
+                      mr: '5.5%',
+                      '&:hover': {
+                        backgroundColor: '#2475bf',
+                      }
+                    }} >Pay {0.2 * total} </MenuItem></Link>
+
+
+                </Grid>
+
+              </Grid>
+
+            </CardContent>
+
 
 
           </Card>
