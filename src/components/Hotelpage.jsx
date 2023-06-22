@@ -62,7 +62,7 @@ const Hotelpage = () => {
   const [telno, settelno] = useState(123456789)
   const [date, setdate] = useState("")
   const [time, settime] = useState("")
-  
+
   useEffect(() => {
     if (dishObject.name !== "") {
       let existing = false;
@@ -603,7 +603,7 @@ const Hotelpage = () => {
                     '&:hover': {
                       backgroundColor: '#2475bf',
                     }
-                  }} ><Link to={`/reviews`} >Add review</Link></MenuItem>
+                  }} ><Link style={{ textDecoration: 'none',color:"#fff" }}  to={`/reviews`} >Add review</Link></MenuItem>
                 </Grid>
               }
             />

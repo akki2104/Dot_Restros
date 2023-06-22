@@ -6,16 +6,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
-const DatePick = (props) => {
-
-
-  // const today = new Date();
-  // const [varDate, setDate] = useState(today)
-  
+const DatePick = (props) => {  
 
   const callNext = (v) => {
     props.forValue(v)
   }
+
+  const currDate=dayjs()
+  // console.log("currdate",currDate)
 
 
 
@@ -24,7 +22,7 @@ const DatePick = (props) => {
 
 
       <DemoItem>
-        <DatePicker onChange={callNext} disablePast label={'Select Date'} views={['day']} format='DD/MM/YYYY' maxDate={dayjs('2023-12-25')} />
+        <DatePicker onChange={callNext} disablePast label={'Select Date'} views={['day']} format='DD/MM/YYYY' maxDate={currDate.add(7,'day')} />
       </DemoItem>
 
 

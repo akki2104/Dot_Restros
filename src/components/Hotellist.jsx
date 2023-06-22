@@ -10,7 +10,11 @@ const Hotellist=[
             Paneer:{"Kadhai paneer":170,"paneer punjabi":100},
             chicken:{"chicken do pyaza":500,"grilled chicken":210,"hyderabadi biryani":400}
         },
-        rating:4.5
+        rating:4.5,
+        openhr:11,
+        openmin:0,
+        closehr:21,
+        closemin:0
 
     },
     {
