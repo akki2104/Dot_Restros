@@ -57,6 +57,12 @@ input::placeholder{
   margin-bottom: 4%;
 }
 
+/* a{
+  text-decoration: none;
+} */
+
+
+
 /* hotelpagecss */
 *{
   font-family: 'Jost', sans-serif !important;

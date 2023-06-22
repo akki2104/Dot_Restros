@@ -16,7 +16,7 @@ const Timepick = (props) => {
 
 
             
-                <TimePicker onChange={callNext} defaultValue={dayjs('2022-04-17T15:30')} />
+                <TimePicker onChange={callNext} label={'Select time'} />
            
 
         </LocalizationProvider>

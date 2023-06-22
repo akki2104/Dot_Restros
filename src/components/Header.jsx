@@ -19,7 +19,21 @@ import InputBase from '@mui/material/InputBase';
 
 // import Divider from '@mui/material/Divider';
 // import AdbIcon from '@mui/icons-material/Adb';
-const pages = ['Home', 'My Orders', 'Contact Us'];
+// const pages = ['Home', 'My Orders', 'About Us'];
+const pages = [
+  {
+    name:"Home",
+    to:"/"
+  },
+  {
+    name:"My Orders",
+    to:"/orders"
+  },
+  {
+    name:"About Us",
+    to:"/aboutus"
+  }
+];
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const logo = "/images/LOGO.png";
@@ -156,9 +170,9 @@ const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link to="/">
-                    <Typography color='#282828' textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Link style={{ textDecoration: 'none' }} to={page.to}>
+                    <Typography color='#282828' textAlign="center">{page.name}</Typography>
                   </Link>
                 </MenuItem>
               ))}
@@ -179,14 +193,14 @@ const Header = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, ml: '10%' }}>
             {pages.map((page) => (
               <MenuItem
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
 
                 sx={{ m: 2, display: 'block' }}
               >
-                <Link to="/">
+                <Link style={{ textDecoration: 'none' }} to={page.to}>
                   <Typography color='#282828' fontWeight='700' >
-                    {page}
+                    {page.name}
                   </Typography>
                 </Link>
 
@@ -230,7 +244,7 @@ const Header = () => {
           </Box> */}
 
           <MenuItem className='logsin_big' sx={{
-            color: '#fff',
+            
             backgroundColor: "#2A88DF",
             borderRadius: "20px",
             padding: "8px 20px 8px 20px",
@@ -241,7 +255,7 @@ const Header = () => {
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} ><Link to="/register" >Login/Signup</Link></MenuItem>
+          }} ><Link  style={{ textDecoration: 'none',color:"#fff" }} to="/register" >Login/Signup</Link></MenuItem>
 
 
           <MenuItem className='logsin_small' sx={{
@@ -254,7 +268,7 @@ const Header = () => {
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} ><Link to="/register" >Login</Link></MenuItem>
+          }} ><Link style={{ textDecoration: 'none',color:"#fff" }} to="/register" >Login</Link></MenuItem>
 
 
 

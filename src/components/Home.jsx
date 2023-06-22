@@ -3,6 +3,7 @@ import Header from "./Header";
 import Flyer from "./Flyer";
 import Hotelcard from './Cards';
 import Hotellist from './Hotellist'
+import Footer from "./Footer";
 import Grid from '@mui/material/Grid';
 import "../App.css"
 import { Link } from "react-router-dom";
@@ -17,12 +18,13 @@ const Home = () => {
                     console.log(index)
                     return (
                          <Grid key={index} item lg={3} md={4} xs={12} sx={{ display: 'flex', justifyContent: 'center', }} >
-                         <Link to={`/hotelpage/${val.id}`} ><Hotelcard name={val.name} location={val.location} discount={val.discount} />
+                         <Link style={{ textDecoration: 'none' }} to={`/hotelpage/${val.id}`} ><Hotelcard name={val.name} location={val.location} discount={val.discount} />
                          </Link></Grid>
                     )
                 })}
 
             </Grid>
+            <Footer/>
         </>
 
     )
