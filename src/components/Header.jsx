@@ -22,16 +22,16 @@ import InputBase from '@mui/material/InputBase';
 // const pages = ['Home', 'My Orders', 'About Us'];
 const pages = [
   {
-    name:"Home",
-    to:"/"
+    name: "Home",
+    to: "/"
   },
   {
-    name:"My Orders",
-    to:"/orders"
+    name: "My Orders",
+    to: "/orders"
   },
   {
-    name:"About Us",
-    to:"/aboutus"
+    name: "About Us",
+    to: "/aboutus"
   }
 ];
 
@@ -105,6 +105,18 @@ const Header = () => {
   // const handleCloseUserMenu = () => {
   // setAnchorElUser(null);
   // };
+
+
+  // const loginFucn = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:4000/auth/google", {
+  //       method: "GET"
+  //     })
+  //     const data = await response.json();
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   return (
     <AppBar style={{
@@ -244,7 +256,7 @@ const Header = () => {
           </Box> */}
 
           <MenuItem className='logsin_big' sx={{
-            
+
             backgroundColor: "#2A88DF",
             borderRadius: "20px",
             padding: "8px 20px 8px 20px",
@@ -255,7 +267,7 @@ const Header = () => {
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} ><Link  style={{ textDecoration: 'none',color:"#fff" }} to="/register" >Login/Signup</Link></MenuItem>
+          }} ><Link style={{ textDecoration: 'none', color: "#fff" }} to="http://localhost:4000/auth/google" >Login/Signup</Link></MenuItem>
 
 
           <MenuItem className='logsin_small' sx={{
@@ -268,7 +280,7 @@ const Header = () => {
             '&:hover': {
               backgroundColor: '#2475bf',
             }
-          }} ><Link style={{ textDecoration: 'none',color:"#fff" }} to="/register" >Login</Link></MenuItem>
+          }} ><Link style={{ textDecoration: 'none', color: "#fff" }}  >Login</Link></MenuItem>
 
 
 
