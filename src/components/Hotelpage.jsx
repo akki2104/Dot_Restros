@@ -62,10 +62,20 @@ const Hotelpage = () => {
   const [telno, settelno] = useState(123456789)
   const [date, setdate] = useState("")
   const [time, settime] = useState("")
+  // const [OrderDetails, setOrderDetails] = useState()
+
+
+  //restaurent prices map
+  const prices = [
+    { price: 190, name: "Kaju butter" },
+    { price: 170, name: "Kadhai paneer" },
+    { price: 100, name: "paneer punjabi" },
+    { price: 500, name: "chicken do pyaza" },
+  ]
 
   useEffect(() => {
     if (dishObject.name !== "") {
-      console.log("currdishobject",dishObject);
+
       let existing = false;
       dishArray.forEach(obj => {
         if (obj.name === dishObject.name) {
@@ -74,16 +84,18 @@ const Hotelpage = () => {
       })
       if (existing) {
         const newdishArray = dishArray.map(obj => {
-         
-          if (obj.name === dishObject.name && obj.qty > 0) {
+
+          if (obj.name === dishObject.name) {
             if (plus) return { ...obj, qty: (obj.qty) + 1 };
             else {
               return { ...obj, qty: obj.qty - 1 }
             }
           }
-          return {...obj}
+          else {
+            return obj
+          }
         });
-        console.log("newdishArray at update system:",newdishArray);
+
         setDishArray(newdishArray);
 
       } else if (plus) {
@@ -97,7 +109,6 @@ const Hotelpage = () => {
     }
   }, [plus, dishObject])
   useEffect(() => {
-    console.log("disharray inside not issue :",dishArray)
     const summary = dishArray.map((dish) => {
       if (dish.qty > 0) {
         return (
@@ -126,21 +137,35 @@ const Hotelpage = () => {
 
     })
     setsumDish(summary)
-    dishArray.forEach((item => {
 
-      if (plus) {
-        setTotal(total + Number(dishObject.price))
-      }
-      else if (total > 0 && total >= (Number(dishObject.price))) {
-        setTotal(total - (Number(dishObject.price)))
-      }
+    // dishArray.forEach((item) => {
 
 
+    if (plus) {
+      setTotal(total + Number(dishObject.price))
+    }
 
-    }))
+    else {
+      dishArray.forEach((itemp) => {
+        if (itemp.name === dishObject.name && itemp.qty > -1) {
+          setTotal(total - (Number(itemp.price)))
+        }
+      })
+    }
+
+
+
+    //     else if (total > 0 && total >= (Number(dishObject.price))) {
+    // setTotal(total - (Number(dishObject.price)))
+    // })
+
+
+
+
 
     //eslint-disable-next-line
   }, [dishArray])
+
   const customerName = (v) => {
     setbookingName(v.target.value)
   }
@@ -155,6 +180,30 @@ const Hotelpage = () => {
     settime(`${v.$H}:${v.$m}`)
   }
   const sendOrderDetails = () => {
+    const preorderDetails = dishArray.filter((items) => {
+      return items.qty > 0;
+    });
+    // prices.map((value, idx) => {
+    //   const orderDetails = preorderDetails.map(items => ({
+    //     item: 1,
+    //     qty: items.qty
+    //   }));
+    // })
+    console.log("i am orders array ", preorderDetails)
+    let orderDetails = []
+    prices.forEach((value, idx) => {
+      preorderDetails.forEach((items) => {
+        if (items.name === value.name) {
+          console.log("i m item that matched", items.name, ":", items.qty)
+          orderDetails.push({
+            item: idx,
+            qty: items.qty
+          })
+        }
+      })
+    })
+
+    console.log(orderDetails)
     const sendData = async () => {
       try {
         const response = await fetch("http://localhost:4000/orders/send", {
@@ -175,9 +224,7 @@ const Hotelpage = () => {
               "name": hotel.name,
               "code": hotel.id
             },
-            "orderDetails": dishArray.filter((items) => {
-              return items.qty > 0
-            })
+            "orderDetails": orderDetails
 
           }),
           credentials: "include"
@@ -607,7 +654,7 @@ const Hotelpage = () => {
                     '&:hover': {
                       backgroundColor: '#2475bf',
                     }
-                  }} ><Link style={{ textDecoration: 'none',color:"#fff" }}  to={`/reviews`} >Add review</Link></MenuItem>
+                  }} ><Link style={{ textDecoration: 'none', color: "#fff" }} to={`/reviews`} >Add review</Link></MenuItem>
                 </Grid>
               }
             />
