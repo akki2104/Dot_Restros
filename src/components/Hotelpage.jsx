@@ -65,6 +65,7 @@ const Hotelpage = () => {
 
   useEffect(() => {
     if (dishObject.name !== "") {
+      console.log("currdishobject",dishObject);
       let existing = false;
       dishArray.forEach(obj => {
         if (obj.name === dishObject.name) {
@@ -73,14 +74,16 @@ const Hotelpage = () => {
       })
       if (existing) {
         const newdishArray = dishArray.map(obj => {
+         
           if (obj.name === dishObject.name && obj.qty > 0) {
             if (plus) return { ...obj, qty: (obj.qty) + 1 };
             else {
               return { ...obj, qty: obj.qty - 1 }
             }
           }
+          return {...obj}
         });
-
+        console.log("newdishArray at update system:",newdishArray);
         setDishArray(newdishArray);
 
       } else if (plus) {
@@ -94,6 +97,7 @@ const Hotelpage = () => {
     }
   }, [plus, dishObject])
   useEffect(() => {
+    console.log("disharray inside not issue :",dishArray)
     const summary = dishArray.map((dish) => {
       if (dish.qty > 0) {
         return (
@@ -125,7 +129,7 @@ const Hotelpage = () => {
     dishArray.forEach((item => {
 
       if (plus) {
-        setTotal(total + Number(item.price))
+        setTotal(total + Number(dishObject.price))
       }
       else if (total > 0 && total >= (Number(dishObject.price))) {
         setTotal(total - (Number(dishObject.price)))
