@@ -120,6 +120,7 @@ const Header = () => {
 
   return (
     <AppBar style={{
+      zIndex:99999,
       backgroundColor: '#fff',
       color: '#2A88DF',
       boxShadow: "none"
