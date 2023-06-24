@@ -435,7 +435,7 @@ useEffect(() => {
             }}
             autoComplete="off"
           >
-            <Grid item xs={5} >
+            <Grid item xs={12} md={5} >
               <Grid><Typography item sx={{}} variant="h6" fontWeight="700" >
                 Booking Details
               </Typography></Grid>
