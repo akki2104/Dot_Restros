@@ -47,12 +47,12 @@ const orderSchema = mongoose.Schema({
     type: Array,
     // required: true,
     default:[]
-  }
-  // paid: {
-  //   type: Boolean,
-  //   required: true,
-  //   default: false,
-  // },
+  },
+  paid: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   // orderTimestamp: {
   //   type: Date,
   //   default: Date.now(),

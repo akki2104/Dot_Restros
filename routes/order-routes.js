@@ -13,7 +13,7 @@ router.get("find/:id", findOrderById);
 
 router.get("/cancel/:id", cancelOrderById);
 
-router.post("/payment", orderPayment);
+router.post("/payment/:id", orderPayment);
 
 router.get("/all", getAllOrders);
 
